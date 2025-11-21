@@ -1,0 +1,52 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/java-postgres
+{
+    "name": "Java & PostgreSQL",
+    "dockerFile": "Docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "features": {
+        "ghcr.io/devcontainers-extra/features/springboot-sdkman:2": {},
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+    },
+    "mounts": [
+        "source=localcache,target=/home/vscode/.m2,type=volume"
+    ],
+    "runArgs": [
+        "--network=docker-default-network", // change this once you rename the project folder!
+        "--hostname=${localWorkspaceFolderBasename}"
+    ],
+    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "vscode",
+    // Use 'initializeCommand' to run commands on the host before container gets created.
+    "initializeCommand": "touch ${localEnv:HOME}/.vscode/.zsh_history;docker network create docker-default-network || echo Fine. Using existing network.",
+    "containerEnv": {
+        "DOCKER_NETWORK": "docker-default-network",
+        "GRAALVM_HOME": "/opt/mandrel",
+        "DB_HOST": "postgres",
+        "AMQ_HOST": "artemis",
+        "KAFKA_BOOTSTRAP": "kafka",
+        "OTEL_HOST": "grafana-otel-lgtm",
+        "CHROME_BIN": "/usr/bin/chromium",
+        "OLLAMA_HOST": "host.docker.internal"
+    },
+    "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
+    },
+    "terminal.integrated.profiles.linux": {
+        "zsh": {
+            "path": "zsh"
+        }
+    }
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    // "features": {}
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // This can be used to network with other containers or with the host.
+    // "forwardPorts": [5432],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "java -version",
+    // Configure tool-specific properties.
+    // "customizations": {},
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+    // "remoteUser": "root"
+}
