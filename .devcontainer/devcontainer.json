@@ -1,34 +1,44 @@
-// For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/java-postgres
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.217.4/containers/azure-functions-java-11
 {
-    "name": "Java & PostgreSQL",
-// The `"dockerFile": "Dockerfile"` line in the JSON configuration specifies the name of the Dockerfile
-// that should be used to build the Docker container for the Java & PostgreSQL development environment.
-// This Dockerfile contains instructions on how to build the container image, including the base image,
-// dependencies, environment setup, and configurations needed for the development environment. By
-// specifying the Dockerfile name in the configuration, the DevContainer extension in Visual Studio
-// Code knows which Dockerfile to use when creating the development container.
-    "dockerFile": "Dockerfile",
-    "service": "app",
-    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-    "features": {
-        "ghcr.io/devcontainers-extra/features/springboot-sdkman:2": {},
-        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+    "name": "Java",
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    "build": {
+        "dockerfile": "Dockerfile"
     },
+    "features": {
+        "./local-feature": {},
+        "ghcr.io/devcontainers-community/npm-features/prettier:1": {},
+        "ghcr.io/devcontainers-contrib/features/curl-apt-get:1": {},
+        "ghcr.io/devcontainers-contrib/features/json-server:1": {},
+        "ghcr.io/devcontainers-contrib/features/quarkus-sdkman:2": {},
+        "ghcr.io/devcontainers-extra/features/springboot-sdkman:2": {},
+        "ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {},
+        "ghcr.io/devcontainers/features/common-utils:2.5.4": {},
+        "ghcr.io/devcontainers/features/common-utils:2": {},
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+        "ghcr.io/devcontainers/features/java:1": {
+            "version": "none",
+            "installMaven": "true",
+            "mavenVersion": "3.9.10",
+            "installGradle": "9.2.0"
+        },
+        "ghcr.io/devcontainers/features/node:1.6.3": {},
+        "ghcr.io/dhoeric/features/k6:latest": {},
+        "ghcr.io/eitsupi/devcontainer-features/jq-likes:2": {},
+        "ghcr.io/lukewiwa/features/shellcheck:0": {}
+    },
+    "forwardPorts": [
+        7071
+    ],
     "mounts": [
         "source=localcache,target=/home/vscode/.m2,type=volume"
     ],
-    "runArgs": [
-        "--network=docker-default-network", // change this once you rename the project folder!
-        "--hostname=${localWorkspaceFolderBasename}"
-    ],
-    // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-    "remoteUser": "vscode",
-    // Use 'initializeCommand' to run commands on the host before container gets created.
-    "initializeCommand": "touch ${localEnv:HOME}/.vscode/.zsh_history;docker network create docker-default-network || echo Fine. Using existing network.",
+    "postCreateCommand": "sudo chown -R vscode.vscode /home/vscode/.m2;mkdir -p /home/vscode/.redhat/; echo '{\"disabled\":true}' > /home/vscode/.redhat/io.quarkus.analytics.localconfig",
     "containerEnv": {
         "DOCKER_NETWORK": "docker-default-network",
         "GRAALVM_HOME": "/opt/mandrel",
+        "JAVA_HOME": "/usr/lib/jvm/msopenjdk-current",
         "DB_HOST": "postgres",
         "AMQ_HOST": "artemis",
         "KAFKA_BOOTSTRAP": "kafka",
@@ -36,23 +46,51 @@
         "CHROME_BIN": "/usr/bin/chromium",
         "OLLAMA_HOST": "host.docker.internal"
     },
-    "settings": {
-        "terminal.integrated.defaultProfile.linux": "zsh"
-    },
-    "terminal.integrated.profiles.linux": {
-        "zsh": {
-            "path": "zsh"
+    // Use 'initializeCommand' to run commands on the host before container gets created.
+    "initializeCommand": "touch ${localEnv:HOME}/.vscode/.zsh_history;docker network create docker-default-network || echo Fine. Using existing network.",
+    "runArgs": [
+        "--network=docker-default-network", // change this once you rename the project folder!
+        "--hostname=${localWorkspaceFolderBasename}"
+    ], // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "vscode",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-docker",
+                "vscjava.vscode-java-pack",
+                "esbenp.prettier-vscode",
+                "mhutchie.git-graph",
+                "donjayamanne.githistory",
+                "waderyan.gitblame",
+                "SonarSource.sonarlint-vscode",
+                "DotJoshJohnson.xml",
+                "redhat.vscode-xml",
+                "timonwong.shellcheck",
+                "Angular.ng-template",
+                "redhat.vscode-quarkus",
+                "shengchen.vscode-checkstyle",
+                "fwcd.kotlin",
+                "rhalaly.scope-to-this",
+                "yzhang.markdown-all-in-one",
+                "redhat.vscode-yaml",
+                "jebbs.plantuml",
+                "EditorConfig.EditorConfig",
+                "tonybaloney.vscode-pets",
+                "ms-vscode.live-server",
+                "ryanluker.vscode-coverage-gutters",
+                "ms-vsliveshare.vsliveshare",
+                "myml.vscode-markdown-plantuml-preview",
+                "vscjava.vscode-java-test",
+                "redhat.java"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh"
+            },
+            "terminal.integrated.profiles.linux": {
+                "zsh": {
+                    "path": "zsh"
+                }
+            }
         }
     }
-    // Features to add to the dev container. More info: https://containers.dev/features.
-    // "features": {}
-    // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    // This can be used to network with other containers or with the host.
-    // "forwardPorts": [5432],
-    // Use 'postCreateCommand' to run commands after the container is created.
-    // "postCreateCommand": "java -version",
-    // Configure tool-specific properties.
-    // "customizations": {},
-    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-    // "remoteUser": "root"
 }
