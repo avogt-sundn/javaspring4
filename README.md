@@ -11,6 +11,10 @@
   - `./gradlew build`
   - `./gradlew test`
 
+- Continuous Build & test:
+  - `./gradlew test --continue`
+
+
 **Devcontainer**
 - **Files:** `/.devcontainer/Dockerfile`, `/.devcontainer/devcontainer.json`.
 - **Rebuild container with an optional Mandrel release:** pass build args to the devcontainer/Docker build. Example (manual docker build):
