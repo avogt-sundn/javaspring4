@@ -83,7 +83,8 @@
                 "ms-vsliveshare.vsliveshare",
                 "myml.vscode-markdown-plantuml-preview",
                 "vscjava.vscode-java-test",
-                "redhat.java"
+                "redhat.java",
+                "vscjava.vscode-java-debug"
             ],
             "settings": {
                 "terminal.integrated.defaultProfile.linux": "zsh"
