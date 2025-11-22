@@ -34,6 +34,12 @@ docker build --build-arg INSTALL_MANDREL_FROM_RELEASE=true --build-arg MANDREL_V
     - Terminal 2: `./gradlew bootRun` (application restarts when classes update)
 - To force DevTools restart behavior, set `SPRING_DEVTOOLS_RESTART_ENABLED=true` or pass `-Dspring.devtools.restart.enabled=true`.
 
+Developer convenience (VS Code)
+- There are VS Code tasks to run the two recommended steps:
+  - `Gradle: Continuous Compile (classes)` — runs `./gradlew -t classes` in a background terminal
+  - `Gradle: Boot Run` — runs `./gradlew bootRun` in a background terminal
+- Open the Command Palette (Ctrl+Shift+P) -> `Tasks: Run Task` and start both tasks. DevTools will restart the app when compiled classes change.
+
 **Native image (Mandrel / Graal)**
 - `build.gradle` includes `org.graalvm.buildtools.native`. Building native images requires a compatible Mandrel/Graal runtime.
 - Note: `build.gradle` config uses a Java toolchain set to Java 25. The devcontainer base image is Java 21; ensure your container provides a Java 25-compatible Mandrel (or install Temurin 25) before building native images.
