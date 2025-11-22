@@ -9,11 +9,11 @@
     "features": {
         "./local-feature": {},
         "ghcr.io/devcontainers-community/npm-features/prettier:1": {},
-        "ghcr.io/devcontainers-contrib/features/curl-apt-get:1": {},
-        "ghcr.io/devcontainers-contrib/features/json-server:1": {},
-        "ghcr.io/devcontainers-contrib/features/quarkus-sdkman:2": {},
+        "ghcr.io/devcontainers-extra/features/curl-apt-get:1": {},
+        "ghcr.io/devcontainers-extra/features/json-server:1": {},
+        "ghcr.io/devcontainers-extra/features/quarkus-sdkman:2": {},
         "ghcr.io/devcontainers-extra/features/springboot-sdkman:2": {},
-        "ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {},
+        "ghcr.io/devcontainers-extra/features/zsh-plugins:0": {},
         "ghcr.io/devcontainers/features/common-utils:2.5.4": {},
         "ghcr.io/devcontainers/features/common-utils:2": {},
         "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
@@ -50,7 +50,9 @@
     "initializeCommand": "touch ${localEnv:HOME}/.vscode/.zsh_history;docker network create docker-default-network || echo Fine. Using existing network.",
     "runArgs": [
         "--network=docker-default-network", // change this once you rename the project folder!
-        "--hostname=${localWorkspaceFolderBasename}"
+        "--hostname=${localWorkspaceFolderBasename}",
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock"
     ], // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
     "remoteUser": "vscode",
     "customizations": {
