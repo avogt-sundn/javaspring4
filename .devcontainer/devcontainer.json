@@ -15,18 +15,13 @@
         "ghcr.io/devcontainers-extra/features/springboot-sdkman:2": {},
         "ghcr.io/devcontainers-extra/features/zsh-plugins:0": {},
         "ghcr.io/devcontainers/features/common-utils:2.5.4": {},
-        "ghcr.io/devcontainers/features/common-utils:2": {},
         "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
         "ghcr.io/devcontainers/features/java:1": {
-            "version": "none",
             "installMaven": "true",
             "mavenVersion": "3.9.10",
-            "installGradle": "9.2.0"
-        },
-        "ghcr.io/devcontainers/features/node:1.6.3": {},
-        "ghcr.io/dhoeric/features/k6:latest": {},
-        "ghcr.io/eitsupi/devcontainer-features/jq-likes:2": {},
-        "ghcr.io/lukewiwa/features/shellcheck:0": {}
+            "installGradle": "true",
+            "gradleVersion": "9.2.0"
+        }
     },
     "forwardPorts": [
         7071
@@ -38,7 +33,6 @@
     "containerEnv": {
         "DOCKER_NETWORK": "docker-default-network",
         "GRAALVM_HOME": "/opt/mandrel",
-        "JAVA_HOME": "/usr/lib/jvm/msopenjdk-current",
         "DB_HOST": "postgres",
         "AMQ_HOST": "artemis",
         "KAFKA_BOOTSTRAP": "kafka",
@@ -50,9 +44,7 @@
     "initializeCommand": "touch ${localEnv:HOME}/.vscode/.zsh_history;docker network create docker-default-network || echo Fine. Using existing network.",
     "runArgs": [
         "--network=docker-default-network", // change this once you rename the project folder!
-        "--hostname=${localWorkspaceFolderBasename}",
-        "-v",
-        "/var/run/docker.sock:/var/run/docker.sock"
+        "--hostname=${localWorkspaceFolderBasename}"
     ], // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
     "remoteUser": "vscode",
     "customizations": {
@@ -83,15 +75,14 @@
                 "ms-vsliveshare.vsliveshare",
                 "myml.vscode-markdown-plantuml-preview",
                 "vscjava.vscode-java-test",
-                "redhat.java",
-                "vscjava.vscode-java-debug"
+                "redhat.java"
             ],
             "settings": {
-                "terminal.integrated.defaultProfile.linux": "zsh"
-            },
-            "terminal.integrated.profiles.linux": {
-                "zsh": {
-                    "path": "zsh"
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "terminal.integrated.profiles.linux": {
+                    "zsh": {
+                        "path": "zsh"
+                    }
                 }
             }
         }

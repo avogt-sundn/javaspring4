@@ -1,0 +1,21 @@
+networks:
+  default:
+    name: docker-default-network
+    external: true
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: katalog
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+    mem_limit: 512m
+    mem_reservation: 128m

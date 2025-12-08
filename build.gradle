@@ -26,39 +26,22 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'io.r2dbc:r2dbc-h2'
 	runtimeOnly 'org.postgresql:postgresql'
-	runtimeOnly 'org.postgresql:r2dbc-postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-data-r2dbc-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webflux-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// Testcontainers for integration tests that exercise Postgres
 	// testImplementation 'org.testcontainers:junit-jupiter:1.19.0'
 	// testImplementation 'org.testcontainers:postgresql:1.19.0'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    testImplementation 'org.junit.jupiter.'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
-}
-
-// Ensure test AOT processing is disabled so Testcontainers can start databases during tests
-tasks.named('test') {
-    systemProperty 'spring.test.context.aot.enabled', 'false'
-}
-
-// Disable Spring Boot test AOT processing (avoids AOT resolving Testcontainers ports early)
-// The `springBoot.testAot` DSL does not exist for this plugin version; disable the
-// processTestAot task if present so Testcontainers can start normally during tests.
-tasks.matching { it.name == 'processTestAot' }.configureEach {
-    enabled = false
 }
