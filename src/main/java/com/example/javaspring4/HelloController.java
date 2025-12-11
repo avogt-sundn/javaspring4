@@ -15,6 +15,7 @@ public class HelloController {
 
     @GetMapping(value = "/hello", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<Map<String, String>> hello() {
+
         return Mono.just(Map.of("message", "Hello, world!"));
     }
 

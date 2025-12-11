@@ -1,13 +1,12 @@
 package com.example.javaspring4;
 
-import static org.assertj.core.api.Assertions.*;
-
+import com.example.javaspring4.model.Person;
+import com.example.javaspring4.repository.PersonRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.javaspring4.model.Person;
-import com.example.javaspring4.repository.PersonRepository;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 // @Testcontainers
@@ -32,11 +31,11 @@ public class PersonRepositoryIT {
 
     @Test
     void saveAndFind() {
-        Person p = new Person("Alice");
+        Person p = new Person("Fred");
         Person saved = repo.save(p);
         assertThat(saved.getId()).isNotNull();
 
         Person found = repo.findById(saved.getId()).orElseThrow();
-        assertThat(found.getName()).isEqualTo("Alice");
+        assertThat(found.getName()).isEqualTo("Fred");
     }
 }
